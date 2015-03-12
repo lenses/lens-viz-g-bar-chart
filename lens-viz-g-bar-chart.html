@@ -1,28 +1,28 @@
 <link rel="import" href="../polymer/polymer.html"> 
 <link rel="import" href="../th-d3-chart/th-d3-chart.html"> 
 <link rel="import" href="../google-chart/google-chart.html">
-<link rel="import" href="../th-data-utility/th-data-utility.html">
-<link rel="import" href="../th-u-data-selector/th-u-data-selector.html">
+<link rel="import" href="../lens-u-data-utility/lens-u-data-utility.html">
+<link rel="import" href="../lens-u-data-selector/lens-u-data-selector.html">
 
 <!--
 A Thelma component providing solution to no problem in particular.
 
 ##### Example
 
-    <th-google-bar-chart></th-google-bar-chart>
+    <lens-viz-g-bar-chart></lens-viz-g-bar-chart>
 
-@element th-google-bar-chart
+@element lens-viz-g-bar-chart
 @blurb Element providing solution to no problem in particular.
 @status alpha
-@homepage http://nishacodes.github.io/th-google-bar-chart
+@homepage http://nishacodes.github.io/lens-viz-g-bar-chart
 -->
 
-<polymer-element name="th-google-bar-chart" extends="th-d3-chart"  attributes="input chartData output selectedLabel selectedValues orientation legend showOptions labelValueSelection chartTitle chartSubtitle gridlines yAxisMin yAxisMax fontSize hAxisTitle vAxisTitle backgroundColor textColor gridlinesColor">
+<polymer-element name="lens-viz-g-bar-chart" extends="th-d3-chart"  attributes="input chartData output selectedLabel selectedValues orientation legend showOptions labelValueSelection chartTitle chartSubtitle gridlines yAxisMin yAxisMax fontSize hAxisTitle vAxisTitle backgroundColor textColor gridlinesColor">
   <template>
     <core-style ref="theme"></core-style>
-    <link rel="stylesheet" href="th-google-bar-chart.css">
-    <th-data-utility id="utility"></th-data-utility>
-    <th-u-data-selector id="data_selector" input="{{chartData}}" selections="{{labelValueSelection}}" style="display: {{showOptions | displayFilter}}; height: 10%;"></th-u-data-selector>
+    <link rel="stylesheet" href="lens-viz-g-bar-chart.css">
+    <lens-u-data-utility id="utility"></lens-u-data-utility>
+    <lens-u-data-selector id="data_selector" input="{{chartData}}" selections="{{labelValueSelection}}" style="display: {{showOptions | displayFilter}}; height: 10%;"></lens-u-data-selector>
     <google-chart id="googleChart" on-google-chart-render="{{chartReady}}" style="width:100%; height: {{showOptions | heightFilter}};"
           type='column'
           options= "{{options}}"
@@ -232,7 +232,7 @@ A Thelma component providing solution to no problem in particular.
       },
       getMetaData: function(){
         return {
-          "name": "th-google-bar-chart",
+          "name": "lens-viz-g-bar-chart",
           "description": "Multi Bar Chart by Google",
           "category":"chart",
           "version": "0.0.1",

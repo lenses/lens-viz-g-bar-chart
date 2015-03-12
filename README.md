@@ -1,3 +1,3 @@
-# th-google-bar-chart
+# lens-viz-g-bar-chart
 
-See the [component page](http://nishacodes.github.io/th-google-bar-chart) for more information.
+See the [component page](http://lenses.github.io/lens-viz-g-bar-chart) for more information.
