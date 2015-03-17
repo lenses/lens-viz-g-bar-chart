@@ -128,8 +128,10 @@ A Thelma component providing solution to no problem in particular.
             if (index === 0){
               // Extract the number format of the first row of data and apply to tooltips
               var format = self.$.utility.extractNumberFormat(item[self.labelValueSelection[1][i]]);
-              self._numberPattern = format.pattern; // Use this pattern to apply to axis numbers 
-              self.numberFormats.push({col: i + 1, prefix: format.prefix, suffix: format.suffix, groupingSymbol:',', fractionDigits: format.decimalPlaces});
+              if (format){
+                self._numberPattern = format.pattern; // Use this pattern to apply to axis numbers 
+                self.numberFormats.push({col: i + 1, prefix: format.prefix, suffix: format.suffix, groupingSymbol:',', fractionDigits: format.decimalPlaces});
+              }
             }
             var unformattedValue = self.$.utility.unformatString(item[self.labelValueSelection[1][i]]);
             row.push(unformattedValue);
