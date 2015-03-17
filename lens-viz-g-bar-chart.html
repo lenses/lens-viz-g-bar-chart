@@ -55,7 +55,7 @@ A Thelma component providing solution to no problem in particular.
       labelValueSelection: null,
       legend: true,
       showOptions: true,
-      numberPattern: "#,###.##",
+      numberPattern: "",
       observe: {
         legend: "updateOptions",
         orientation: "updateOptions",
@@ -69,7 +69,7 @@ A Thelma component providing solution to no problem in particular.
         fontSize: "updateOptions",
         yAxisMin: "updateOptions",
         yAxisMax: "updateOptions",
-        numberPattern:  "updateData",
+        numberPattern:  "updateData"
       },
       ready : function() {
         var self = this;
@@ -81,8 +81,9 @@ A Thelma component providing solution to no problem in particular.
           this.updateOptions();
         }.bind(this));
 
-        //this._configureOptions();
+        
         this.reformatData();
+        this.updateOptions();
         
         this.dataSelector.addEventListener('th-data-selection-changed', function() {
           this.labelValueSelection = this.dataSelector.selections;
@@ -112,17 +113,24 @@ A Thelma component providing solution to no problem in particular.
       reformatData: function(){
         var self = this; 
 
-
+        self.numberFormats= [];
         if(!self.labelValueSelection || !self.labelValueSelection[0] || !self.labelValueSelection[1]) {
           return;
         }
         var firstRow = self.labelValueSelection[1].map(function(item){ return item;}) ;
           
 
-        self._data = self.chartData.map(function(item){
+        self._data = self.chartData.map(function(item, index){
           var row = [];
           row.push(item[self.labelValueSelection[0]]);
           for(var i=0; i<self.labelValueSelection[1].length; i++){
+            
+            if (index === 0){
+              // Extract the number format of the first row of data and apply to tooltips
+              var format = self.$.utility.extractNumberFormat(item[self.labelValueSelection[1][i]]);
+              self._numberPattern = format.pattern; // Use this pattern to apply to axis numbers 
+              self.numberFormats.push({col: i + 1, prefix: format.prefix, suffix: format.suffix, groupingSymbol:',', fractionDigits: format.decimalPlaces});
+            }
             var unformattedValue = self.$.utility.unformatString(item[self.labelValueSelection[1][i]]);
             row.push(unformattedValue);
           }
@@ -132,13 +140,14 @@ A Thelma component providing solution to no problem in particular.
         firstRow.unshift(self.labelValueSelection[0]);
         self._data.unshift(firstRow);
 
-        self.numberFormats = [];
-        // TODO: Currently applies numberPattern attribute as the pattern to all columns for simplicity; later we can expose custom format for each column
-        firstRow.forEach(function(item, index){
-          self.numberFormats.push({col: index, pattern: self.numberPattern});
-        })
+        // If a specific number pattern is given, override the default pattern extracted from values
+        if (self.numberPattern){
+          self.numberFormats = [];
+          firstRow.forEach(function(item, index){
+            self.numberFormats.push({col: index, pattern: self.numberPattern});
+          })  
+        }
         
-
       },
       /**
        * Overrides th-d3-chart function. called by observers when input or chartData changes
@@ -187,7 +196,7 @@ A Thelma component providing solution to no problem in particular.
             title: self.vAxisTitle,
             titleTextStyle: { color: fgColor, fontName: colors.theme.font, fontSize: self.fontSize*1.25},
             baselineColor: fgColor,
-            format: self.numberPattern, 
+            format: self.numberPattern || self._numberPattern || "#,###.##", // numberPattern is exposed as an attribute and _numberPattern is the pattern extracted from data
             textStyle:{ color: fgColor, fontName: colors.theme.font, fontSize: '0.85em'},
             minValue: self.orientation === "horizontal" ? self.yAxisMin : "automatic",
             maxValue: self.orientation === "horizontal" ? self.yAxisMax : "automatic",
@@ -200,7 +209,7 @@ A Thelma component providing solution to no problem in particular.
             title: self.hAxisTitle,
             titleTextStyle: { color: fgColor, fontName: colors.theme.font, fontSize: self.fontSize*1.25},
             baselineColor: fgColor,
-            format: self.numberPattern, 
+            format: self.numberPattern || self._numberPattern || "#,###.##", // numberPattern is exposed as an attribute and _numberPattern is the pattern extracted from data
             textStyle:{ color: fgColor, fontName: colors.theme.font, fontSize: '0.85em'},
             minValue: self.orientation === "vertical" ? self.yAxisMin : "automatic",
             maxValue: self.orientation === "vertical" ? self.yAxisMax : "automatic",
@@ -254,7 +263,7 @@ A Thelma component providing solution to no problem in particular.
             "vAxisTitle":{"friendly":"Vertical Axis Title", "type":"string", "default":""},
             "hAxisTitle":{"friendly":"Horizontal Axis Title", "type":"string", "default":""},
             "orientation": {"friendly":"Orientation", "type": "dropdown", "default": "horizontal", "values":["horizontal", "vertical"]},
-            "numberPattern": {"friendly":"Number Pattern", "type":"string", "default":"#,###.##"},
+            "numberPattern": {"friendly":"Number Pattern", "type":"string", "default":""},
             "fontSize":{"friendly":"Font Size", "type":"int", "default":""},
             "textColor":{"friendly":"Text Color", "type":"color", "default":""},
             "backgroundColor":{"friendly":"Background Color", "type":"color", "default":""},
