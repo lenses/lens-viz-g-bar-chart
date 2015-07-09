@@ -1,5 +1,4 @@
 <link rel="import" href="../polymer/polymer.html"> 
-<link rel="import" href="../th-d3-chart/th-d3-chart.html"> 
 <link rel="import" href="../google-chart/google-chart.html">
 <link rel="import" href="../lens-u-data-utility/lens-u-data-utility.html">
 <link rel="import" href="../lens-u-data-selector/lens-u-data-selector.html">
@@ -17,9 +16,8 @@ A Thelma component providing solution to no problem in particular.
 @homepage http://lenses.github.io/lens-viz-g-bar-chart
 -->
 
-<polymer-element name="lens-viz-g-bar-chart" extends="th-d3-chart"  attributes="input chartData output selectedLabel selectedValues orientation legend showOptions labelValueSelection chartTitle chartSubtitle gridlines yAxisMin yAxisMax fontSize hAxisTitle vAxisTitle backgroundColor textColor gridlinesColor numberPattern">
+<dom-module id="lens-viz-g-bar-chart" attributes="input chartData output selectedLabel selectedValues orientation legend showOptions labelValueSelection chartTitle chartSubtitle gridlines yAxisMin yAxisMax fontSize hAxisTitle vAxisTitle backgroundColor textColor gridlinesColor numberPattern">
   <template>
-    <core-style ref="theme"></core-style>
     <link rel="stylesheet" href="lens-viz-g-bar-chart.css">
     <lens-u-data-utility id="utility"></lens-u-data-utility>
     <lens-u-data-selector id="data_selector" input="{{chartData}}" selections="{{labelValueSelection}}" style="display: {{showOptions | displayFilter}}; height: 10%;"></lens-u-data-selector>
@@ -280,4 +278,4 @@ A Thelma component providing solution to no problem in particular.
 
     });
   </script>
-</polymer-element>
+</dom-module>
