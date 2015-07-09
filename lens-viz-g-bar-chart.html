@@ -16,11 +16,11 @@ A Thelma component providing solution to no problem in particular.
 @homepage http://lenses.github.io/lens-viz-g-bar-chart
 -->
 
-<dom-module id="lens-viz-g-bar-chart" attributes="input chartData output selectedLabel selectedValues orientation legend showOptions labelValueSelection chartTitle chartSubtitle gridlines yAxisMin yAxisMax fontSize hAxisTitle vAxisTitle backgroundColor textColor gridlinesColor numberPattern">
+<dom-module id="lens-viz-g-bar-chart" attributes="input output selectedLabel selectedValues orientation legend showOptions labelValueSelection chartTitle chartSubtitle gridlines yAxisMin yAxisMax fontSize hAxisTitle vAxisTitle backgroundColor textColor gridlinesColor numberPattern">
   <template>
     <link rel="stylesheet" href="lens-viz-g-bar-chart.css">
     <lens-u-data-utility id="utility"></lens-u-data-utility>
-    <lens-u-data-selector id="data_selector" input="{{chartData}}" selections="{{labelValueSelection}}" style="display: {{showOptions | displayFilter}}; height: 10%;"></lens-u-data-selector>
+    <lens-u-data-selector id="data_selector" input="{{input}}" selections="{{labelValueSelection}}" style="display: {{showOptions | displayFilter}}; height: 10%;"></lens-u-data-selector>
     <google-chart id="googleChart" on-google-chart-render="{{chartReady}}" style="width:100%; height: {{showOptions | heightFilter}};"
           type='column'
           options= "{{options}}"
@@ -38,17 +38,11 @@ A Thelma component providing solution to no problem in particular.
     Polymer({
       // selectedLabel: "Year",
       // selectedValues: ["Sales","Profit"],
-      chartData: [
+      input: [
         {"Year": "2014", "Sales": 100, "Profit": 50},
         {"Year": "2015", "Sales": 50, "Profit": 40},
         {"Year": "2016", "Sales": 300, "Profit": 200}
       ],
-      // chartData: [
-      //   ["Year", "Sales","Profit"],
-      //   ["2014", 100, 50],
-      //   ["2015", 50, 40],
-      //   ["2016", 300, 200]
-      // ],
       orientation: "horizontal",
       labelValueSelection: null,
       legend: true,
@@ -101,12 +95,11 @@ A Thelma component providing solution to no problem in particular.
       },
       inputChanged: function () {
         var self = this;
-        self.chartData = self.input;
         self.reformatData();
         self.configureOptions();
       },
       /**
-       * 'reformatData' converts chartData into the correct data structure for the map
+       * 'reformatData' converts input into the correct data structure for the map
        */
       reformatData: function(){
         var self = this; 
@@ -118,7 +111,7 @@ A Thelma component providing solution to no problem in particular.
         var firstRow = self.labelValueSelection[1].map(function(item){ return item;}) ;
           
 
-        self._data = self.chartData.map(function(item, index){
+        self._data = self.input.map(function(item, index){
           var row = [];
           row.push(item[self.labelValueSelection[0]]);
           for(var i=0; i<self.labelValueSelection[1].length; i++){
@@ -150,7 +143,7 @@ A Thelma component providing solution to no problem in particular.
         
       },
       /**
-       * Overrides th-d3-chart function. called by observers when input or chartData changes
+       * Called by observers when input changes
        * @return {[type]} [description]
        */
       updateData: function() {
@@ -251,29 +244,6 @@ A Thelma component providing solution to no problem in particular.
       },
       heightFilter: function(value){
         return value ? "90%" : "100%";
-      },
-      getMetaData: function(){
-        return {
-          "name": "lens-viz-g-bar-chart",
-          "description": "Multi Bar Chart by Google",
-          "category":"chart",
-          "version": "0.0.1",
-          "inputAttr": {
-            "chartTitle":{"friendly":"Title", "type":"string", "default":""},
-            "vAxisTitle":{"friendly":"Vertical Axis Title", "type":"string", "default":""},
-            "hAxisTitle":{"friendly":"Horizontal Axis Title", "type":"string", "default":""},
-            "orientation": {"friendly":"Orientation", "type": "dropdown", "default": "horizontal", "values":["horizontal", "vertical"]},
-            "numberPattern": {"friendly":"Number Pattern", "type":"string", "default":""},
-            "fontSize":{"friendly":"Font Size", "type":"int", "default":""},
-            "textColor":{"friendly":"Text Color", "type":"color", "default":""},
-            "backgroundColor":{"friendly":"Background Color", "type":"color", "default":""},
-            "gridlinesColor":{"friendly":"Gridlines Color", "type":"color", "default":""},
-            "gridlines":{"friendly":"Number of Gridlines", "type":"int", "default":"5"},
-            "yAxisMin":{"friendly":"Y Axis Min", "type":"int", "default":""},
-            "yAxisMax":{"friendly":"Y Axis Max", "type":"int", "default":""},
-            "legend":{"friendly":"Show Legend?", "type":"boolean", "default": true}
-          }
-        }
       }
 
     });
