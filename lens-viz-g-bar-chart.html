@@ -223,6 +223,7 @@ A Thelma component providing solution to no problem in particular.
       },
       getColors: function(){
         colors = {};
+        /*
         colors.theme = window.CoreStyle.g.theme;
         colors.accents = [];
 
@@ -231,8 +232,26 @@ A Thelma component providing solution to no problem in particular.
             colors.accents.push(colors.theme[color]);
           }
         }
+        */
 
-        colors.count = colors.accents.length;
+        colors['theme'] = {
+              foreground1: '#FFFFFF',
+              foreground2: '#FFFFFF',
+              background: '#303B49',
+              accent0: '#E64852',
+              accent1: '#5B778D',  
+              accent2 : '#1FB0DF',  
+              accent3:'#66BCE9',  
+              accent4: '#DADCE0',  
+              accent5: '#515151',
+              accent6: '#F8EB21',
+              accents: ['#E64852','#5B778D','#1FB0DF','#66BCE9','#515151','#F8EB21'],
+              font: "'franklin-gothic-urw-cond', sans-serif",
+              serifFont: "'Chronicle Display', 'Times Roman', 'Times New Roman', Georgia, serif",
+              sansSerifFont: "'franklin-gothic-urw-cond', sans-serif",
+              mapColors: ['rgb(239,243,255)','rgb(198,219,239)','rgb(158,202,225)','rgb(107,174,214)','rgb(66,146,198)','rgb(33,113,181)','rgb(8,69,148)']
+        };
+        colors.count = colors.theme.accents.length;//colors.accents.length;
 
         return colors;
       },
