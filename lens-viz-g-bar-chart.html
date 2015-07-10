@@ -247,22 +247,48 @@ A Thelma component providing solution to no problem in particular.
         */
 
         colors['theme'] = {
-              foreground1: '#FFFFFF',
-              foreground2: '#FFFFFF',
-              background: '#303B49',
-              accent0: '#E64852',
-              accent1: '#5B778D',  
-              accent2 : '#1FB0DF',  
-              accent3:'#66BCE9',  
-              accent4: '#DADCE0',  
-              accent5: '#515151',
-              accent6: '#F8EB21',
-              accents: ['#E64852','#5B778D','#1FB0DF','#66BCE9','#515151','#F8EB21'],
-              font: "'franklin-gothic-urw-cond', sans-serif",
-              serifFont: "'Chronicle Display', 'Times Roman', 'Times New Roman', Georgia, serif",
-              sansSerifFont: "'franklin-gothic-urw-cond', sans-serif",
-              mapColors: ['rgb(239,243,255)','rgb(198,219,239)','rgb(158,202,225)','rgb(107,174,214)','rgb(66,146,198)','rgb(33,113,181)','rgb(8,69,148)']
+            foreground1: '#2B2B2B',
+            foreground2: '#FFFFFF',
+            background: '#FFFFFF',
+            accent0: '#3AA5DD',
+            accent1: '#52B64F',  
+            accent2: '#F2673A',  
+            accent3:'#454A50',  
+            accent4: '#969696',  
+            accent5: '#F6F7F7',  
+            accent6: '#51574a',
+            accent7: '#447c69',
+            accent8: '#74c493',
+            accent9: '#8e8c6d',
+            accent10: '#e4bf80',
+            accent11: '#e9d78e',
+            accent12: '#e2975d',
+            accent13: '#f19670',
+            accent14: '#e16552',
+            accent15: '#c94a53',
+            accent16: '#be5168',
+            accent17: '#a34974',
+            accent18: '#993767',
+            accent19: '#65387d',
+            accent20: '#4e2472',
+            accent21: '#9163b6',
+            accent22: '#e279a3',
+            accent23: '#e0598b',
+            accent24: '#7c9fb0',
+            accent25: '#5698c4',
+            accent26: '#9abf88',
+            font: "'proxima-nova', sans-serif",
+            serifFont: "'Chronicle Display', 'Times Roman', 'Times New Roman', Georgia, serif",
+            sansSerifFont: "'proxima-nova', sans-serif",
+            mapColors: ['rgb(239,243,255)','rgb(198,219,239)','rgb(158,202,225)','rgb(107,174,214)','rgb(66,146,198)','rgb(33,113,181)','rgb(8,69,148)']
         };
+        colors.theme.accents = Object.keys(colors.theme).filter(function(key) {
+            return key.indexOf('accent')>-1;
+          })
+          .map(function(key) {
+            return colors.theme[key];
+          });
+
         colors.count = colors.theme.accents.length;//colors.accents.length;
 
         return colors;
