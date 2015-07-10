@@ -20,8 +20,8 @@ A Thelma component providing solution to no problem in particular.
   <template>
     <link rel="stylesheet" href="lens-viz-g-bar-chart.css">
     <lens-u-data-utility id="utility"></lens-u-data-utility>
-    <lens-u-data-selector id="data_selector" input="{{input}}" selections="{{labelValueSelection}}" style="display: {{showOptions | displayFilter}}; height: 10%;"></lens-u-data-selector>
-    <google-chart id="googleChart" on-google-chart-render="{{chartReady}}" style="width:100%; height: {{showOptions | heightFilter}};"
+    <lens-u-data-selector id="data_selector" input="{{input}}" style="display: {{showOptions | displayFilter}}; height: 10%;"></lens-u-data-selector>
+    <google-chart id="googleChart"  style="width:100%; height: {{showOptions | heightFilter}};"
           type='column'
           options= "{{options}}"
           data="{{_data}}"
@@ -38,12 +38,22 @@ A Thelma component providing solution to no problem in particular.
     Polymer({
       // selectedLabel: "Year",
       // selectedValues: ["Sales","Profit"],
-      input: [
-        {"Year": "2014", "Sales": 100, "Profit": 50},
-        {"Year": "2015", "Sales": 50, "Profit": 40},
-        {"Year": "2016", "Sales": 300, "Profit": 200}
-      ],
-      orientation: "horizontal",
+      properties: {
+        input: {
+          type: Array,
+          value: [
+                    {"Year": "2014", "Sales": 100, "Profit": 50},
+                    {"Year": "2015", "Sales": 50, "Profit": 40},
+                    {"Year": "2016", "Sales": 300, "Profit": 200}
+          ],
+          observer: '_inputChanged'
+        },
+        labelValueSelection: {
+          type: Array,
+          value: ['','']
+        }
+      },
+      /*orientation: "horizontal",
       labelValueSelection: null,
       legend: true,
       showOptions: true,
@@ -62,7 +72,7 @@ A Thelma component providing solution to no problem in particular.
         yAxisMin: "updateOptions",
         yAxisMax: "updateOptions",
         numberPattern:  "updateData"
-      },
+      },*/
       ready : function() {
         var self = this;
         this.dataSelector = this.$.data_selector;
@@ -77,7 +87,7 @@ A Thelma component providing solution to no problem in particular.
         this.reformatData();
         this.updateOptions();
         
-        this.dataSelector.addEventListener('th-data-selection-changed', function() {
+        this.dataSelector.addEventListener('lens-selection-changed', function() {
           this.labelValueSelection = this.dataSelector.selections;
           //set published selections for saving the component
           this.selectedLabel = this.labelValueSelection[0];
@@ -93,7 +103,7 @@ A Thelma component providing solution to no problem in particular.
         //if selectedValue changed from outside, set the internal data_selector
         this.dataSelector.selections[1] = this.selectedValues;
       },
-      inputChanged: function () {
+      _inputChanged: function () {
         var self = this;
         self.reformatData();
         self.configureOptions();
@@ -111,7 +121,7 @@ A Thelma component providing solution to no problem in particular.
         var firstRow = self.labelValueSelection[1].map(function(item){ return item;}) ;
           
 
-        self._data = self.input.map(function(item, index){
+        var tmpData = self.input.map(function(item, index){
           var row = [];
           row.push(item[self.labelValueSelection[0]]);
           for(var i=0; i<self.labelValueSelection[1].length; i++){
@@ -131,7 +141,7 @@ A Thelma component providing solution to no problem in particular.
         });
 
         firstRow.unshift(self.labelValueSelection[0]);
-        self._data.unshift(firstRow);
+        tmpData.unshift(firstRow);
 
         // If a specific number pattern is given, override the default pattern extracted from values
         if (self.numberPattern){
@@ -140,6 +150,8 @@ A Thelma component providing solution to no problem in particular.
             self.numberFormats.push({col: index, pattern: self.numberPattern});
           })  
         }
+
+        self._data = tmpData;
         
       },
       /**
