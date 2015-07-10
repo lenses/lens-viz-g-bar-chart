@@ -282,14 +282,14 @@ A Thelma component providing solution to no problem in particular.
             sansSerifFont: "'proxima-nova', sans-serif",
             mapColors: ['rgb(239,243,255)','rgb(198,219,239)','rgb(158,202,225)','rgb(107,174,214)','rgb(66,146,198)','rgb(33,113,181)','rgb(8,69,148)']
         };
-        colors.theme.accents = Object.keys(colors.theme).filter(function(key) {
+        colors.accents = Object.keys(colors.theme).filter(function(key) {
             return key.indexOf('accent')>-1;
           })
           .map(function(key) {
             return colors.theme[key];
           });
 
-        colors.count = colors.theme.accents.length;//colors.accents.length;
+        colors.count = colors.accents.length;//colors.accents.length;
 
         return colors;
       },
