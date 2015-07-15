@@ -51,28 +51,81 @@ A Thelma component providing solution to no problem in particular.
         labelValueSelection: {
           type: Array,
           value: ['','']
-        }
+        },
+         numberFormats: {
+          type: Array,
+          value: []
+        },
+        legend: {
+          type: Boolean,
+          value: true,
+          observer: '_updateOptions'
+        },
+        showOptions: {
+          type: Boolean,
+          value: true
+        },
+        numberPattern: {
+          type: String,
+          value: "",
+          observer: '_updateOptions'
+        },
+        gridlines: {
+          type: Number,
+          value: 5,
+          observer: '_updateOptions'
+        },
+        gridlinesColor: {
+          type: String,
+          value: null,
+          observer: '_updateOptions'
+        },
+        chartTitle: {
+          type: String,
+          value: null,
+          observer: '_updateOptions'
+        },
+        orientation: {
+          type: String,
+          value: 'horizontal',
+          observer: '_updateOptions'
+        },
+        fontSize: {
+          type: String,
+          value: null,
+          observer: '_updateOptions'
+        },
+        backgroundColor: {
+          type: String,
+          value: null,
+          observer: '_updateOptions'
+        },
+        textColor: {
+          type: String,
+          value: null,
+          observer: '_updateOptions'
+        },
+        vAxisTitle: {
+          type: String,
+          value: null,
+          observer: '_updateOptions'
+        },
+        hAxisTitle: {
+          type: String,
+          value: null,
+          observer: '_updateOptions'
+        },
+        yAxisMin: {
+          type: Number,
+          value: null,
+          observer: '_updateOptions'
+        },
+        yAxisMax: {
+          type: Number,
+          value: null,
+          observer: '_updateOptions'
+        },
       },
-      /*orientation: "horizontal",
-      labelValueSelection: null,
-      legend: true,
-      showOptions: true,
-      numberPattern: "",
-      observe: {
-        legend: "updateOptions",
-        orientation: "updateOptions",
-        gridlines: "updateOptions",
-        gridlinesColor: "updateOptions",
-        backgroundColor: "updateOptions",
-        textColor: "updateOptions",
-        chartTitle: "updateOptions",
-        hAxisTitle: "updateOptions",
-        vAxisTitle: "updateOptions",
-        fontSize: "updateOptions",
-        yAxisMin: "updateOptions",
-        yAxisMax: "updateOptions",
-        numberPattern:  "updateData"
-      },*/
       ready : function() {
         var self = this;
         this.dataSelector = this.$.data_selector;
