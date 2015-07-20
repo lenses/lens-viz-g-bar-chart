@@ -50,7 +50,8 @@ A Thelma component providing solution to no problem in particular.
         },
         labelValueSelection: {
           type: Array,
-          value: ['','']
+          value: ['',''],
+          observer: '_inputChanged'
         },
          numberFormats: {
           type: Array,
@@ -133,12 +134,12 @@ A Thelma component providing solution to no problem in particular.
         // Listen for theme changes
         document.addEventListener('th-theme-changed', function(e) {
           this.getColors();
-          this.updateOptions();
+          this._updateOptions();
         }.bind(this));
 
         
         this.reformatData();
-        this.updateOptions();
+        this._updateOptions();
         
         this.dataSelector.addEventListener('lens-selection-changed', function() {
           this.labelValueSelection = this.dataSelector.selections;
@@ -213,9 +214,9 @@ A Thelma component providing solution to no problem in particular.
        */
       updateData: function() {
         this.reformatData();
-        this.updateOptions();
+        this._updateOptions();
       },
-      updateOptions: function(){
+      _updateOptions: function(){
         this.configureOptions();
         this.$.googleChart.drawChart();
       },
